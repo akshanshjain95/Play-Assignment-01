@@ -35,12 +35,12 @@ class HomeController extends Controller{
   def getSessionAction = Action{ implicit request: Request[AnyContent] =>
     val name = request.session.get("name")
     val password = request.session.get("password")
-    val (keyMessage, message) = if(name.exists(_ == "Akshansh") && password.exists(_ == "1234")) ("Success",s"Welcome, Akshansh!") else ("Error", "I don't recognize you!")
+    val (keyMessage, message) = if(name.contains("Akshansh") && password.contains("1234")) ("Success",s"Welcome, Akshansh!") else ("Error", "I don't recognize you!")
     Redirect(routes.HomeController.displayMessageAction()).flashing(keyMessage -> message)
   }
 
   def displayMessageAction = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index(request.flash))
+    Ok(views.html.display(request.flash))
   }
 
 }
